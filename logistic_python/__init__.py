@@ -1,1 +1,1 @@
-from logistic_regression import LogisticRegression
+from logistic_regression import BinaryLogisticRegression
