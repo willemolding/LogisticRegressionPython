@@ -14,7 +14,7 @@ class BinaryLogisticRegression:
         # check inputs here
 
         self._beta = np.zeros((X.shape[1] + 1, 1))
-        result = fmin_l_bfgs_b(_objective, self._beta, args=(X, y, self.C))
+        result = fmin_l_bfgs_b(_binary_objective, self._beta, args=(X, y, self.C))
 
         self._beta = result[0]
         return self
@@ -31,9 +31,7 @@ class BinaryLogisticRegression:
         return np.hstack((1 - probs, probs))
 
 
-
-
-def _objective(beta, X, y, C):
+def _binary_objective(beta, X, y, C):
     """
     The objective function. Returns the regularized negative log-likelihood and gradient.
     C is the inverse regularization parameter
@@ -57,4 +55,7 @@ def _objective(beta, X, y, C):
     grad_neg_ll = C*np.sum((1./ (1. + exp_XBeta))*exp_XBeta*X - y*X, axis=0) + beta
 
     return neg_ll, grad_neg_ll
+
+
+
 
